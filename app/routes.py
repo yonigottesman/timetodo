@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, jsonify
 from app.forms import LoginForm, AddTaskForm
 from flask_login import current_user, login_user
 from flask_login import logout_user
@@ -66,3 +66,13 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
+
+@app.route('/add_work', methods=['POST'])
+@login_required
+def add_work():
+    task_id = request.form['task_id']
+    add_amount = int(request.form['amount'])
+    task = Task.query.get(task_id)
+    task.progress = task.progress + add_amount
+    db.session.commit()
+    return jsonify({'new_progress':task.progress})

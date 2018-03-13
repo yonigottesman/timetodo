@@ -33,4 +33,4 @@ class RegistrationForm(FlaskForm):
 class AddTaskForm(FlaskForm):
     description = StringField('Description', validators=[DataRequired()])
     goal = IntegerField('Goal', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Add')
